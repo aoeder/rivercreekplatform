@@ -201,8 +201,6 @@ Producers should eventually be able to:
 - understand settlement
 - analyze economics
 
----
-
 ## Buyers
 
 Organizations or individuals purchasing agricultural products.
@@ -231,8 +229,6 @@ Buyers should eventually be able to:
 - track transactions
 - understand provenance
 
----
-
 ## Processors
 
 Facilities that transform agricultural products.
@@ -257,8 +253,6 @@ Processors should eventually be able to expose:
 
 Processor capacity should become part of the transaction network rather than an unrelated scheduling problem.
 
----
-
 ## Logistics Providers
 
 Participants responsible for moving agricultural products.
@@ -281,8 +275,6 @@ Logistics providers should eventually be able to expose:
 - delivery windows
 
 Transportation should connect directly to the underlying transaction.
-
----
 
 ## Storage Providers
 
@@ -1323,6 +1315,9 @@ V1 does not require Rivercreek to immediately build:
 - every institutional procurement workflow
 - every regulatory workflow
 - large-scale data products
+- public APIs
+- SDKs
+- developer portals
 
 Those may become important.
 
@@ -1446,6 +1441,10 @@ Agricultural products exist in the physical world.
 
 Location, time, capacity, transportation, weight, quality, processing, and fulfillment cannot be abstracted away.
 
+## Infrastructure first
+
+Core business capabilities should belong to the Rivercreek network rather than being trapped inside individual screens or applications.
+
 ---
 
 # 44. Initial Success Criteria
@@ -1481,7 +1480,291 @@ Not maximum feature count.
 
 ---
 
-# 45. Long-Term Direction
+# 45. Infrastructure and API Strategy
+
+Rivercreek is intended to become more than a first-party application.
+
+The long-term objective is for Rivercreek to become underlying market, transaction, physical clearing, and data infrastructure for agriculture.
+
+The Rivercreek application should be understood as the first major interface to the Rivercreek network, not the network itself and not necessarily the only interface.
+
+Over time, external systems should be able to interact with Rivercreek through:
+
+- APIs
+- webhooks
+- data feeds
+- embedded components
+- integrations
+- developer tools
+- partner applications
+
+Potential participants may include:
+
+- farm-management software
+- buyer procurement systems
+- processor-management systems
+- logistics platforms
+- storage systems
+- ERP systems
+- accounting systems
+- financial institutions
+- insurers
+- commodity and risk-management systems
+- agricultural technology companies
+- institutional buyers
+- data customers
+
+The long-term goal is for an authorized participant to interact with the Rivercreek network without necessarily using the Rivercreek user interface.
+
+For example:
+
+A farm-management system could create or update inventory in Rivercreek.
+
+A buyer's procurement system could discover available supply or communicate demand.
+
+A processor-management system could publish available capacity and receive reservations.
+
+A logistics platform could expose transportation capacity and receive shipment requests.
+
+A financial institution could interact with authorized transaction and settlement data.
+
+A data customer could consume permitted Rivercreek market data, benchmarks, indices, or analytics.
+
+These systems should interact with the same underlying transaction infrastructure used by Rivercreek's first-party applications.
+
+Rivercreek should not maintain separate business logic for its user interface and external integrations.
+
+The same core rules governing:
+
+- identity
+- organizations
+- permissions
+- inventory
+- markets
+- offers
+- transactions
+- capacity
+- fulfillment
+- reconciliation
+- settlement
+- ledger behavior
+
+should apply regardless of which authorized interface initiates the action.
+
+The Rivercreek network is the product.
+
+The Rivercreek application is one interface to that network.
+
+---
+
+# 46. Rivercreek as a System of Record
+
+Where Rivercreek is authoritative for a transaction or transaction component, it should provide durable canonical records that other authorized systems can reference.
+
+Potential canonical records include:
+
+- organizations
+- farms
+- facilities
+- agricultural products
+- inventory
+- lots
+- listings
+- offers
+- transactions
+- contracts
+- processing reservations
+- shipments
+- fulfillment events
+- settlements
+- ledger events
+- provenance events
+
+External systems may contribute information to these records through authorized interfaces.
+
+They should not create competing definitions of the same Rivercreek transaction state.
+
+For example, if Rivercreek records an offer as accepted and inventory as committed, an external application should not be able to represent that same Rivercreek inventory as freely available through a conflicting Rivercreek transaction.
+
+Rivercreek should increasingly function as a shared transaction record across market participants.
+
+---
+
+# 47. API-First Domain Principle
+
+Rivercreek should be designed so that core business capabilities are not trapped inside a particular user interface.
+
+The intended conceptual structure is:
+
+RIVERCREEK DOMAIN
+↓
+APPLICATION / SERVICE LAYER
+↓
+AUTHORIZED INTERFACES
+
+Authorized interfaces may eventually include:
+
+- Rivercreek web
+- Rivercreek mobile
+- public APIs
+- partner APIs
+- webhooks
+- internal administrative tools
+- embedded Rivercreek experiences
+- approved automated agents
+
+The user interface should call into the same underlying business capabilities that can eventually support external integrations.
+
+This does not require Rivercreek to expose every internal function publicly.
+
+It means core business behavior should be reusable, explicit, permissioned, and independent of presentation.
+
+---
+
+# 48. Stable Network Identity
+
+Durable Rivercreek objects should have stable identifiers that can eventually be referenced safely across systems.
+
+Examples include:
+
+- organization
+- facility
+- farm
+- inventory
+- lot
+- listing
+- transaction
+- processor reservation
+- shipment
+- settlement
+
+External integrations should not depend on mutable display names as authoritative identifiers.
+
+Identifiers exposed externally should be designed with security, stability, and compatibility in mind.
+
+---
+
+# 49. Event-Driven Network
+
+Important changes within Rivercreek should be representable as explicit domain events.
+
+Examples may include:
+
+- InventoryCreated
+- InventoryUpdated
+- LotCreated
+- ListingActivated
+- OfferCreated
+- OfferCountered
+- OfferAccepted
+- InventoryReserved
+- TransactionCreated
+- ProcessingRequested
+- ProcessingConfirmed
+- ShipmentRequested
+- ShipmentBooked
+- ShipmentPickedUp
+- ShipmentDelivered
+- FulfillmentConfirmed
+- SettlementCalculated
+- SettlementFinalized
+- PaymentCompleted
+
+These events may eventually support:
+
+- audit history
+- notifications
+- webhooks
+- partner integrations
+- workflow automation
+- analytics
+- market data
+- provenance
+- data products
+
+The initial architecture does not require a complex distributed event system.
+
+Rivercreek should not introduce infrastructure such as message brokers or microservices merely to appear event-driven.
+
+Instead, important domain actions should be modeled cleanly enough that reliable external events can be introduced as the network grows.
+
+---
+
+# 50. Data Infrastructure
+
+Rivercreek's transaction network should create a structured representation of physical agricultural commerce.
+
+Subject to permissions, contracts, privacy requirements, and applicable law, the network may eventually support data products involving:
+
+- supply
+- demand
+- transaction prices
+- quantities
+- weights
+- grades
+- geography
+- processing capacity
+- processing pricing
+- processing yields
+- logistics capacity
+- freight pricing
+- routes
+- storage capacity
+- fulfillment times
+- settlement outcomes
+
+Potential products may include:
+
+- benchmarks
+- indices
+- market data feeds
+- analytics
+- forecasting
+- APIs
+- institutional datasets
+
+Data infrastructure should emerge from real economic activity conducted or represented through the network.
+
+Rivercreek should not compromise participant trust or transaction integrity merely to create a data product.
+
+---
+
+# 51. Infrastructure Flywheel
+
+Rivercreek's long-term network should reinforce itself.
+
+More participants
+→ More supply and demand
+→ More transactions
+→ More physical clearing activity
+→ More structured transaction data
+→ Better price discovery
+→ Better capacity visibility
+→ Better matching
+→ Better benchmarks
+→ Better integrations
+→ Greater usefulness to participants
+→ More participants
+
+The market infrastructure, physical clearing infrastructure, and data infrastructure should strengthen one another.
+
+---
+
+# 52. Platform Principle
+
+Rivercreek should be built so that another company can eventually say:
+
+> We do not need to recreate agricultural market, transaction, processing, logistics, settlement, or data infrastructure. We can connect to Rivercreek.
+
+This is a long-term architectural direction, not a requirement to build a public developer platform in V1.
+
+V1 remains focused on making the cattle transaction work exceptionally well.
+
+The platform architecture should preserve the ability to expose successful Rivercreek capabilities to other systems later.
+
+---
+
+# 53. Long-Term Direction
 
 Rivercreek's long-term opportunity is to become infrastructure through which agricultural participants coordinate increasingly large portions of physical agricultural commerce.
 
@@ -1518,6 +1801,8 @@ RISK MANAGEMENT
 OPERATIONAL INTELLIGENCE
 ↓
 MARKET DATA
+↓
+APIs AND INTEGRATIONS
 
 The architecture should leave room for this future.
 
@@ -1525,11 +1810,11 @@ The initial product should not attempt to build all of it simultaneously.
 
 ---
 
-# 46. The Rivercreek Test
+# 54. The Rivercreek Test
 
 When evaluating a proposed feature, ask:
 
-> Does this make it easier to discover, price, execute, clear, fulfill, settle, or understand physical agricultural commerce?
+> Does this make it easier to discover, price, execute, clear, fulfill, settle, integrate with, or understand physical agricultural commerce?
 
 If yes:
 
@@ -1541,19 +1826,25 @@ Question why Rivercreek needs it.
 
 ---
 
-# 47. Final Product Definition
+# 55. Final Product Definition
 
 Rivercreek is not simply an agricultural marketplace.
 
-Rivercreek is building market and transaction infrastructure for physical agriculture.
+Rivercreek is building market, transaction, physical clearing, and data infrastructure for agriculture.
 
 The market layer connects supply and demand and enables price discovery and transaction execution.
 
 The physical clearing layer coordinates the processing, transportation, storage, fulfillment, reconciliation, and settlement required to complete those transactions.
 
-The data created by those transactions improves the network.
+The data layer transforms activity across the network into increasingly useful market intelligence and infrastructure.
 
-The long-term objective is to create a common transaction layer for physical agricultural commerce.
+The API and integration layer allows authorized external systems to participate in the same underlying network.
+
+Rivercreek's first-party applications provide direct interfaces to that infrastructure.
+
+They are not the infrastructure itself.
+
+The long-term objective is for Rivercreek to become a common transaction and data layer for physical agricultural commerce.
 
 The first objective is much simpler:
 
