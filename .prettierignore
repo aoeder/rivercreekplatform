@@ -1,0 +1,14 @@
+# Canonical product documentation is authored by humans and is not reformatted by tooling.
+AGENTS.md
+docs/
+specs/
+research/
+
+package-lock.json
+.next/
+out/
+build/
+coverage/
+playwright-report/
+test-results/
+next-env.d.ts

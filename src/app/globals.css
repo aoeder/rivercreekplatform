@@ -1,0 +1,55 @@
+@import "tailwindcss";
+
+/*
+ * Rivercreek design tokens (DESIGN_SYSTEM.md §7–§9).
+ *
+ * Tailwind's default color palette and radius scale are removed so every color
+ * and corner radius in the product comes from this list (DESIGN_SYSTEM.md §25).
+ * Add a token here only when it represents a reusable design decision;
+ * semantic colors (positive, warning, error, informational) are added
+ * alongside the first component that needs them.
+ *
+ * Values are provisional until final brand tokens are approved.
+ */
+@theme {
+  --color-*: initial;
+
+  --color-canvas: #f7f6f3;
+  --color-surface: #ffffff;
+  --color-ink: #1c1c1a;
+  --color-ink-muted: #5b5a55;
+  --color-line: #e2e0da;
+  --color-accent: #2f4a5a;
+  --color-accent-strong: #223744;
+  --color-on-accent: #ffffff;
+
+  --radius-*: initial;
+  --radius-sm: 4px;
+  --radius-md: 6px;
+}
+
+@layer base {
+  html {
+    color-scheme: light;
+  }
+
+  body {
+    background-color: var(--color-canvas);
+    color: var(--color-ink);
+  }
+
+  /* One consistent, visible focus treatment for every interactive element. */
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
